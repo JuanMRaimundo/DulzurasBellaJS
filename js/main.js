@@ -1,4 +1,5 @@
 //constructores para manejar los ingresos que haga el usuario
+
 class Tarta {
 	constructor(sabor, precio, tamaño, stock) {
 		this.sabor = sabor;
@@ -24,45 +25,75 @@ class Facturas {
 		this.stock = this.stock - cant;
 	};
 }
-
-//empiezo a construir mi base de arrays de tartas, de a poco iré sumando otros productos.
-let precios = [
-	{ sabor: "Cabsha", precio: "1200" },
-	{ sabor: "Frutillas", precio: "1500" },
-	{ sabor: "Pastafrola", precio: "1100" },
-	{ sabor: "AppleCrumble", precio: "1500" },
-	{ sabor: "LemonPie", precio: "1300" },
-];
-
-let tamañoGrande = [
-	{ sabor: "Cabsha", tamaño: "28cm diametro" },
-	{ sabor: "Frutillas", tamaño: "28cm diametro" },
-	{ sabor: "Pastafrola", tamaño: "28cm diametro" },
-	{ sabor: "AppleCrumble", tamaño: "28cm diametro" },
-	{ sabor: "LemonPie", tamaño: "28cm diametro" },
-];
-let tamañoMini = [
-	{ sabor: "Cabsha", tamaño: "10cm diametro" },
-	{ sabor: "Frutillas", tamaño: "10cm diametro" },
-	{ sabor: "Pastafrola", tamaño: "10cm diametro" },
-	{ sabor: "AppleCrumble", tamaño: "10cm diametro" },
-	{ sabor: "LemonPie", tamaño: "10cm diametro" },
-];
-let carritoCompra = []; //array para guardar la info q ingresa el usuario
-//funcion q me permite ingresar los datos que quiere el usuario asi dsp aplicarlos en las otras funciones para armar el carrito
-
-//constructor y funcion para encargar tortas a pedido. El límite será dos para poder evaluar cual se acepta. Ver si lo dejo como array o hago un constructor
 const encargoTorta = [];
-const Torta = {
-	constructor(bizcochuelo, relleno, cobertura) {
+class Torta {
+	constructor(bizcochuelo, relleno, cobertura, tamaño) {
 		this.bizcochuelo = bizcochuelo;
 		this.relleno = relleno;
 		this.cobertura = cobertura;
 		this.tamaño = tamaño;
+	}
+}
+//empiezo a construir mi base de arrays de tartas, de a poco iré sumando otros productos.
+const productos = [
+	{
+		tipo: "tarta",
+		sabor: "Cabsha",
+		precio: "1200",
+		tamañoGrande: "28cm diametro",
+		tamañoChico: "10cm diametro",
 	},
-};
+	{
+		tipo: "tarta",
+		sabor: "Frutillas",
+		precio: "1500",
+		tamañoGrande: "28cm diametro",
+		tamañoChico: "10cm diametro",
+	},
+	{
+		tipo: "tarta",
+		sabor: "Pastafrola",
+		precio: "1100",
+		tamañoGrande: "28cm diametro",
+		tamañoChico: "10cm diametro",
+	},
+	{
+		tipo: "tarta",
+		sabor: "AppleCrumble",
+		precio: "1500",
+		tamañoGrande: "28cm diametro",
+		tamañoChico: "10cm diametro",
+	},
+	{
+		tipo: "tarta",
+		sabor: "LemonPie",
+		precio: "1300",
+		tamañoGrande: "28cm diametro",
+		tamañoChico: "10cm diametro",
+	},
+	{
+		tipo: "facturas",
+		sabor: "medialunas",
+		precio: "150",
+	},
+	{
+		tipo: "facturas",
+		sabor: "tortitas negras",
+		precio: "120",
+	},
+	{
+		tipo: "facturas",
+		sabor: "sacramentos",
+		precio: "170",
+	},
+];
 
-let limite = 2;
+let carritoCompra = []; //array para guardar la info q ingresa el usuario
+//funcion q me permite ingresar los datos que quiere el usuario asi dsp aplicarlos en las otras funciones para armar el carrito
+
+//constructor y funcion para encargar tortas a pedido. El límite será dos para poder evaluar cual se acepta. Ver si lo dejo como array o hago un constructor
+
+let limite = 1;
 const encargarTorta = function (arr, limite) {
 	do {
 		let bizcochuelo = prompt("Ingresa el sabor del bizcochuelo");
@@ -70,7 +101,7 @@ const encargarTorta = function (arr, limite) {
 		let cobertura = prompt("Ingresa el tipo de cobertura");
 		let tamaño = prompt("Ingresa el tamaño del bizcochuelo");
 
-		arr.push(new encargoTorta(bizcochuelo, relleno, cobertura, tamaño));
+		arr.push(new Torta(bizcochuelo, relleno, cobertura, tamaño));
 	} while (arr.length != limite);
 };
 //ver lista de precios
@@ -80,7 +111,7 @@ const encargarTorta = function (arr, limite) {
 	}
 };
 verPrecios(precios, console.log); */
-precios.forEach((el) => console.log(el));
+productos.forEach((el) => console.log(el.precio));
 
 /* for (let i = 0; i < precios.length; i++) {
 	console.log(precios[i]);
@@ -90,13 +121,30 @@ precios.forEach((el) => console.log(el));
 } */
 
 //funcion para calcular envios
-const precioConEnvio = precios.map((envio) => {
+let copiaProductos = productos;
+const precioConEnvio = copiaProductos.map((envio) => {
 	return {
 		sabor: envio.sabor,
 		precio: Number(envio.precio * 1.1).toFixed(2),
 	};
 });
 console.log(precioConEnvio);
+
+//funcion  de busqueda
+const busqueda = function (arr, filtro) {
+	const encontrado = arr.find((el) => {
+		return el.sabor.includes(filtro);
+	});
+	return encontrado;
+};
+
+const formulario = document.querySelector("#portada_contacto");
+formulario.addEventListener("submit", (e) => {
+	e.preventDefault();
+	const inputUser = e.target[0];
+	const inputConsulta = e.target[1];
+	console.log(`User : ${inputUser.value} Consulta: ${inputConsulta.value}`);
+});
 
 const cargarTartas = function () {
 	let sabor = prompt("Ingresá el sabor que has elegido");
@@ -109,20 +157,20 @@ const cargarTartas = function () {
 const verCarrito = function () {
 	carritoCompra.forEach((elemento) => {
 		alert(
-			`Ha seleccionado una tarta sabor ${elemento.sabor} que tiene un precio de ${elemento.precio}.`
+			`Ha seleccionado una tarta sabor ${elemento.sabor} que tiene un precio de $${elemento.precio}.`
 		);
 	});
 };
 const ofertaDelDia = function () {
-	const ofertas = precios.filter((tarta) => tarta.precio < 1200);
+	const ofertas = productos.filter((tarta) => tarta.precio < 1200);
 	for (const oferta of ofertas) {
-		alert(`La oferta del día de hoy es: ${oferta.sabor} a ${oferta.precio}`);
+		alert(`La oferta del día de hoy es: ${oferta.sabor} a $${oferta.precio}`);
 	}
 };
 
 const finalizarCompra = function () {
 	const total = carritoCompra.reduce((acc, el) => acc + el.precio, 0);
-	alert(`Su pedido tiene un total de ${total}`);
+	alert(`Su pedido tiene un total de $${total}`);
 };
 
 alert("Bienvenido/a a Dulzuras Bella");
@@ -134,7 +182,7 @@ let medialunas = 180;
 let pastafrolas = 150;
 let tortitasNegras = 130;
 
-for (let i = 2; i >= 0; i--) {
+for (let i = 2; i >= 0; --i) {
 	let ingresoUsuario = prompt(
 		"Ingresá tu usario." + "Tenés " + (i + 1) + " oportunidades."
 	);
@@ -169,15 +217,18 @@ while (opcion !== "5") {
 	);
 }
 
+encargarTorta(encargoTorta, limite);
+console.log(encargoTorta);
+
 alert("Gracias por compartir nuestras Dulzuras");
 
 function evaluar(si, no) {
 	let evaluacion = prompt("¿Volverías a pedir aquí?\n1-SI\n2-NO");
 	switch (evaluacion) {
-		case "1" || "si":
+		case "1" || si:
 			alert("Gracias por tu tiempo");
 			break;
-		case "2" || "no":
+		case "2" || no:
 			prompt("Ayudanos a mejorar con tu comentario");
 			break;
 
@@ -188,6 +239,27 @@ function evaluar(si, no) {
 	return evaluar;
 }
 evaluar();
+
+const inputSearch = document.querySelector(".form-control");
+
+console.log(inputSearch.value);
+inputSearch.addEventListener("keyup", () => {
+	inputSearch.value;
+});
+const btnSearch = document.querySelector(".btn");
+
+//asigno evento de busqueda
+btnSearch.addEventListener("click", (e) => {
+	e.preventDefault();
+	const busq = busqueda(productos, inputSearch.value);
+	console.log(busq);
+});
+
+// evento para Selectores
+
+/* select.addEventListener("change", () => {
+	let option = select.options[select.selectedIndex].value;
+}); */
 
 /* if (ingreso) {
 let opciones = prompt(
