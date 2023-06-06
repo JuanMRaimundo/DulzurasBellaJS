@@ -138,14 +138,6 @@ const busqueda = function (arr, filtro) {
 	return encontrado;
 };
 
-const formulario = document.querySelector("#portada_contacto");
-formulario.addEventListener("submit", (e) => {
-	e.preventDefault();
-	const inputUser = e.target[0];
-	const inputConsulta = e.target[1];
-	console.log(`User : ${inputUser.value} Consulta: ${inputConsulta.value}`);
-});
-
 const cargarTartas = function () {
 	let sabor = prompt("Ingresá el sabor que has elegido");
 	let precio = parseInt(prompt("Ingresá el precio del producto"));
@@ -253,6 +245,14 @@ btnSearch.addEventListener("click", (e) => {
 	e.preventDefault();
 	const busq = busqueda(productos, inputSearch.value);
 	console.log(busq);
+});
+
+const formulario = document.querySelector("#contacto");
+formulario.addEventListener("submit", (e) => {
+	e.preventDefault();
+	const inputUser = e.target[0];
+	const inputConsulta = e.target[1];
+	console.log(`User : ${inputUser.value} Consulta: ${inputConsulta.value}`);
 });
 
 // evento para Selectores

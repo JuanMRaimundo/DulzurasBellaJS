@@ -66,7 +66,7 @@
 						<input
 							class="form-control me-2"
 							type="search"
-							placeholder="Search"
+							placeholder="Buscar"
 							aria-label="Search"
 						/>
 						<button class="btn btn-outline-success" type="submit">
@@ -78,8 +78,8 @@
 		</header>
 
 		<main class="portada">
+			<h1>Encontrá todas las dulzuras para cada momento</h1>
 			<div class="portada_inicial">
-				<h1>Encontrá todas las dulzuras para cada momento</h1>
 				<section>
 					<aside>Tartas</aside>
 					<aside>Facturas</aside>
@@ -94,8 +94,8 @@
 				<aside>IMG</aside>
 			</div>
 			<h2>Pedinos presupuesto para tu evento</h2>
-			<div class="portada_contacto">
-				<div class="portada_contacto_form mb-3">
+			<form class="portada_contacto">
+				<div id="contacto" class="portada_contacto mb-3">
 					<label for="exampleFormControlInput1" class="form-label"
 						>Correo electrónico</label
 					>
@@ -103,6 +103,7 @@
 						type="email"
 						class="form-control"
 						id="exampleFormControlInput1"
+						name="email"
 						placeholder="nombre@email.com"
 					/>
 				</div>
@@ -113,6 +114,7 @@
 					<textarea
 						class="form-control"
 						id="exampleFormControlTextarea1"
+						name="consulta"
 						rows="3"
 					></textarea>
 				</div>
@@ -123,6 +125,7 @@
 							type="checkbox"
 							value=""
 							id="invalidCheck"
+							name="novedades"
 							required
 						/>
 						<label class="form-check-label" for="invalidCheck">
@@ -136,7 +139,7 @@
 				<div class="col-12">
 					<button class="btn btn-primary" type="submit">Enviar</button>
 				</div>
-			</div>
+			</form>
 		</main>
 
 		<footer class="footer">
@@ -144,7 +147,7 @@
 			<div>Logo</div>
 			<div>Dónde encontrarnos</div>
 		</footer>
-		<script src="js/main.js"></script>
+
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
 			integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
@@ -155,5 +158,6 @@
 			integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
 			crossorigin="anonymous"
 		></script>
+		<script src="js/main.js"></script>
 	</body>
 </html>
