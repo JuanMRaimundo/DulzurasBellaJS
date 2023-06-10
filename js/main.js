@@ -37,204 +37,177 @@ class Torta {
 //empiezo a construir mi base de arrays de tartas, de a poco iré sumando otros productos.
 const productos = [
 	{
+		id: 1,
 		tipo: "tarta",
 		sabor: "Cabsha",
 		precio: "1200",
+		cantidad: 0,
 		tamañoGrande: "28cm diametro",
 		tamañoChico: "10cm diametro",
+		imagen: "./img/cabsha.jpg",
 	},
 	{
+		id: 2,
 		tipo: "tarta",
 		sabor: "Frutillas",
 		precio: "1500",
+		cantidad: 0,
 		tamañoGrande: "28cm diametro",
 		tamañoChico: "10cm diametro",
+		imagen: "./img/frutilla1.jpg",
 	},
 	{
+		id: 3,
 		tipo: "tarta",
 		sabor: "Pastafrola",
 		precio: "1100",
+		cantidad: 0,
 		tamañoGrande: "28cm diametro",
 		tamañoChico: "10cm diametro",
+		imagen: "./img/pastafrola1.jpg",
 	},
 	{
+		id: 4,
 		tipo: "tarta",
 		sabor: "AppleCrumble",
 		precio: "1500",
+		cantidad: 0,
 		tamañoGrande: "28cm diametro",
 		tamañoChico: "10cm diametro",
+		imagen: "./img/manzana1.jpg",
 	},
 	{
+		id: 5,
 		tipo: "tarta",
 		sabor: "LemonPie",
 		precio: "1300",
+		cantidad: 0,
 		tamañoGrande: "28cm diametro",
 		tamañoChico: "10cm diametro",
+		imagen: "./img/lemonpie1.jpg",
 	},
 	{
+		id: 6,
+		tipo: "tarta",
+		sabor: "Brownie",
+		precio: "1500",
+		cantidad: 0,
+		tamañoGrande: "28cm diametro",
+		tamañoChico: "10cm diametro",
+		imagen: "./img/brownie1.jpg",
+	},
+	{
+		id: 7,
 		tipo: "facturas",
 		sabor: "medialunas",
 		precio: "150",
+		cantidad: 0,
+		imagen: "./img/medialuna1.jpg",
 	},
 	{
+		id: 8,
 		tipo: "facturas",
 		sabor: "tortitas negras",
 		precio: "120",
+		cantidad: 0,
+		imagen: "./img/tortita-negra1.jpg",
 	},
 	{
+		id: 9,
 		tipo: "facturas",
 		sabor: "sacramentos",
-		precio: "170",
+		precio: "180",
+		cantidad: 0,
+		imagen: "./img/sacramento1.jpg",
 	},
 ];
 
+//guardar productos en el LS
+
+function guardarEnLS(arr) {
+	localStorage.setItem("productos", JSON.stringify(arr));
+}
+guardarEnLS(productos);
+
 let carritoCompra = []; //array para guardar la info q ingresa el usuario
-//funcion q me permite ingresar los datos que quiere el usuario asi dsp aplicarlos en las otras funciones para armar el carrito
 
-//constructor y funcion para encargar tortas a pedido. El límite será dos para poder evaluar cual se acepta. Ver si lo dejo como array o hago un constructor
+//funcion de busqueda
+function filtrar(arr, filtro, param) {
+	return arr.filter((el) => {
+		if (param == "precio") {
+			return el.precio <= parseFloat(filtro);
+		} else {
+			return el[`${param}`].includes(filtro);
+		}
+	});
+}
 
-let limite = 1;
-const encargarTorta = function (arr, limite) {
-	do {
-		let bizcochuelo = prompt("Ingresa el sabor del bizcochuelo");
-		let relleno = prompt("Ingresa el sabor del relleno");
-		let cobertura = prompt("Ingresa el tipo de cobertura");
-		let tamaño = prompt("Ingresa el tamaño del bizcochuelo");
-
-		arr.push(new Torta(bizcochuelo, relleno, cobertura, tamaño));
-	} while (arr.length != limite);
-};
-//ver lista de precios
-/* const verPrecios = function (arr, fn) {
-	for (const el of arr) {
-		fn(el);
-	}
-};
-verPrecios(precios, console.log); */
-productos.forEach((el) => console.log(el.precio));
-
-/* for (let i = 0; i < precios.length; i++) {
-	console.log(precios[i]);
-} */
-/* for (const precioProd of Tarta) {
-	console.log(precioProd.precio);
-} */
-
-//funcion para calcular envios
-let copiaProductos = productos;
-const precioConEnvio = copiaProductos.map((envio) => {
-	return {
-		sabor: envio.sabor,
-		precio: Number(envio.precio * 1.1).toFixed(2),
-	};
-});
-console.log(precioConEnvio);
-
-//funcion  de busqueda
+//funcion  de filtro
 const busqueda = function (arr, filtro) {
 	const encontrado = arr.find((el) => {
 		return el.sabor.includes(filtro);
 	});
 	return encontrado;
 };
+// funcion para dibujar el html
+const contenedor = document.getElementById("container");
 
-const cargarTartas = function () {
-	let sabor = prompt("Ingresá el sabor que has elegido");
-	let precio = parseInt(prompt("Ingresá el precio del producto"));
-	const nuevaTarta = new Tarta(sabor, precio);
-	carritoCompra.push(nuevaTarta);
-	alert("producto añadido al carrito");
-};
+productos.forEach((producto) => {
+	let card = document.createElement("div");
+	card.classList.add("card", "col.sm-12", "col-lg-3");
+	let contenido = `  <img src="${producto.imagen}" class="card-img-top" alt="...">
+	<div class="card-body">
+	  <h5 class="card-title">${producto.sabor}</h5>
+	  <p class="card-text">$${producto.precio}</p>
+	  <a href="#card" class="btn btn-bs-warning-bg-subtle" onClick="aniadirCarrito(${producto.id})" >Agregar Dulzura</a>
+	</div>`;
+	card.innerHTML = contenido;
+	contenedor.appendChild(card);
+});
 
-const verCarrito = function () {
-	carritoCompra.forEach((elemento) => {
-		alert(
-			`Ha seleccionado una tarta sabor ${elemento.sabor} que tiene un precio de $${elemento.precio}.`
-		);
-	});
-};
-const ofertaDelDia = function () {
-	const ofertas = productos.filter((tarta) => tarta.precio < 1200);
-	for (const oferta of ofertas) {
-		alert(`La oferta del día de hoy es: ${oferta.sabor} a $${oferta.precio}`);
-	}
-};
+let viendoCarrito = document.getElementById("cart");
 
-const finalizarCompra = function () {
-	const total = carritoCompra.reduce((acc, el) => acc + el.precio, 0);
-	alert(`Su pedido tiene un total de $${total}`);
-};
+let aniadirCarrito = (id) => {
+	const producto = productos.find((el) => el.id == id); //arreglar para q me acepte mas de uno y se vayan sumando
+	const productoExistente = carritoCompra.find((el) => el.id === producto.id);
 
-alert("Bienvenido/a a Dulzuras Bella");
-
-let usuario = "Rodrigo";
-let contraseña = 147741;
-let ingreso = false;
-let medialunas = 180;
-let pastafrolas = 150;
-let tortitasNegras = 130;
-
-for (let i = 2; i >= 0; --i) {
-	let ingresoUsuario = prompt(
-		"Ingresá tu usario." + "Tenés " + (i + 1) + " oportunidades."
-	);
-	if (ingresoUsuario === usuario) {
-		alert("Bienvenido Rodrigo! Comencemos con tu compra!");
-		ingreso = true;
-		break;
+	if (productoExistente) {
+		// Si el producto ya existe, incrementar su cantidad
+		productoExistente.cantidad++;
 	} else {
-		alert("ERROR");
+		// Si es un nuevo producto, añadirlo al carrito con cantidad 1
+		producto.cantidad = 1;
+		carritoCompra.push(producto);
 	}
-}
 
-let opcion = prompt(
-	"Ingrese una opción: \n 1:Añadir productos \n 2:Mostrar la oferta del día \n 3:Ver mi carrito \n 4:Finalizar compra \n 5: Salir"
-);
+	viendoCarrito.className = "card-carrito";
+	viendoCarrito.innerHTML = "";
+	const contenedorCarrito = document.createElement("div");
+	contenedorCarrito.classList.add("contenedorCarrito");
+	carritoCompra.forEach((producto) => {
+		contenedorCarrito.innerHTML = `<img class="carrComp" src="${
+			producto.imagen
+		}"/>
+		<div class="productoEnCarrito">
+		${producto.sabor}
+		</div>
+		<div class= "productoEnCarrito"> Cantidad: ${producto.cantidad}</div>
+		<div class= "productoEnCarrito"> Precio: ${producto.precio}</div>
+		<div class= "productoEnCarrito"> Subtotal: ${
+			producto.precio * producto.cantidad
+		}</div>
+		<button class= "btn btn-bs-warning-bg-subtle" id = "removerProducto" onClick="removerProducto(${
+			producto.id
+		})">Quitar Dulzura</button>
+		<div> Total: $${producto.precio * producto.cantidad}</div>
+		`;
+	});
+	viendoCarrito.appendChild(contenedorCarrito);
+};
 
-while (opcion !== "5") {
-	if (opcion === "1") {
-		cargarTartas(carritoCompra);
-	}
-	if (opcion === "2") {
-		ofertaDelDia();
-	}
-	if (opcion === "3") {
-		verCarrito();
-	}
-	if (opcion === "4") {
-		finalizarCompra();
-	}
-	opcion = prompt(
-		"Vuelve a ingresar una opción \n 1:Seguir añadiendo productos \n 2:Mostrar la oferta del día \n 3:Ver mi carrito \n 4:Finalizar compra \n 5: Salir"
-	);
-}
-
-encargarTorta(encargoTorta, limite);
-console.log(encargoTorta);
-
-alert("Gracias por compartir nuestras Dulzuras");
-
-function evaluar(si, no) {
-	let evaluacion = prompt("¿Volverías a pedir aquí?\n1-SI\n2-NO");
-	switch (evaluacion) {
-		case "1" || si:
-			alert("Gracias por tu tiempo");
-			break;
-		case "2" || no:
-			prompt("Ayudanos a mejorar con tu comentario");
-			break;
-
-		default:
-			alert("Opción incorrecta");
-			break;
-	}
-	return evaluar;
-}
-evaluar();
-
+//evento en el input
 const inputSearch = document.querySelector(".form-control");
 
-console.log(inputSearch.value);
 inputSearch.addEventListener("keyup", () => {
 	inputSearch.value;
 });
@@ -247,89 +220,10 @@ btnSearch.addEventListener("click", (e) => {
 	console.log(busq);
 });
 
-const formulario = document.querySelector("#contacto");
-formulario.addEventListener("submit", (e) => {
-	e.preventDefault();
-	const inputUser = e.target[0];
-	const inputConsulta = e.target[1];
-	console.log(`User : ${inputUser.value} Consulta: ${inputConsulta.value}`);
-});
+/* guardarEnLS(carritoCompra); */
 
-// evento para Selectores
-
-/* select.addEventListener("change", () => {
-	let option = select.options[select.selectedIndex].value;
-}); */
-
-/* if (ingreso) {
-let opciones = prompt(
-	"Elegí tu producto para tu mesa dulce: \n1-Medialunas\n2-Pastafrolas\n3-Tortitas Negras\nX-Presiona x para terminar."
-);
-
-while (opciones != "x") {
-	switch (opciones) {
-		case "1":
-			let pedido1 = parseInt(
-				prompt("Ingresá tu dinero para abonar. Muchas gracias.")
-			);
-			if (pedido1 < 180) {
-				alert("Ingresá un monto superior. Muchas gracias");
-			} else {
-				pedidoMedialuna = pedido1 - medialunas;
-
-				alert(
-					"Seleccionaste Medialunas, tiene un costo de $" +
-						medialunas +
-						".Tu vuelto es $" +
-						pedidoMedialuna +
-						"En 10min estará listo"
-				);
-			}
-
-			break;
-		case "2":
-			let pedido2 = parseInt(
-				prompt("Ingresá tu dinero para abonar. Muchas gracias.")
-			);
-			if (pedido2 < 150) {
-				alert("Ingresá un monto superior. Muchas gracias");
-			} else {
-				pedidoPastafrola = pedido2 - pastafrolas;
-				alert(
-					"Seleccionaste Pastafrolas, tiene un costo de $" +
-						pastafrolas +
-						".Tu vuelto es $" +
-						pedidoPastafrola +
-						"En 10min estará listo"
-				);
-			}
-			break;
-		case "3":
-			let pedido3 = parseInt(
-				prompt("Ingresá tu dinero para abonar. Muchas gracias.")
-			);
-			if (pedido3 < 130) {
-				alert("Ingresá un monto superior. Muchas gracias");
-			} else {
-				pedidoTortitasNegras = pedido3 - tortitasNegras;
-				alert(
-					"Seleccionaste Tortitas Negras, tiene un costo de $" +
-						tortitasNegras +
-						".Tu vuelto es $" +
-						pedidoTortitasNegras +
-						"En 10min estará listo"
-				);
-			}
-			break;
-		default:
-			alert("Opción no válida");
-			break;
-	}
-
-	opciones = prompt(
-		"Si no pudiste elegir tu producto seleccionalo: \n1-Medialunas\n2-Pastafrolas\n3-Tortitas Negras\nSi ya elegiste presioná X, y tu pedido quedará registrado."
-	);
-}
+if (localStorage.getItem("productos")) {
+	dulzuras = JSON.parse(localStorage.getItem("productos"));
 } else {
-alert("Registrate para que puedas armar tu presupuesto");
-} */
+	carritoCompra = productos;
+}

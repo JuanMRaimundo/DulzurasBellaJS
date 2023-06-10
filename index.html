@@ -79,29 +79,21 @@
 
 		<main class="portada">
 			<h1>Encontrá todas las dulzuras para cada momento</h1>
-			<div class="portada_inicial">
-				<section>
-					<aside>Tartas</aside>
-					<aside>Facturas</aside>
-				</section>
-			</div>
-			<div class="portada_torta">
-				<h2>Armá tu torta</h2>
-				<aside>IMG</aside>
-			</div>
-			<div class="portada_nosotros">
-				<h2>Quienes somos?</h2>
-				<aside>IMG</aside>
-			</div>
+			<div id="container" class="row"></div>
+
+			<div id="cart" class="card"></div>
+			<a name="card"> </a>
+			<div id="total" clasd="card"></div>
+
 			<h2>Pedinos presupuesto para tu evento</h2>
-			<form class="portada_contacto">
-				<div id="contacto" class="portada_contacto mb-3">
+			<form id="contacto" class="portada_contacto">
+				<div class="portada_contacto mb-3">
 					<label for="exampleFormControlInput1" class="form-label"
 						>Correo electrónico</label
 					>
 					<input
 						type="email"
-						class="form-control"
+						class="contacto_input form-control"
 						id="exampleFormControlInput1"
 						name="email"
 						placeholder="nombre@email.com"
@@ -112,7 +104,7 @@
 						>Dejanos tu consulta</label
 					>
 					<textarea
-						class="form-control"
+						class="consulta_text form-control"
 						id="exampleFormControlTextarea1"
 						name="consulta"
 						rows="3"

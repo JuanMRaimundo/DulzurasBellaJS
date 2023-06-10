@@ -33,6 +33,30 @@ body {
   align-items: center;
 }
 
+#container {
+  width: 80%;
+  height: 60%;
+}
+
+.card-carrito {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f7819f;
+}
+
+.carrComp {
+  width: 150px;
+  height: 150px;
+}
+
+.contenedorCarrito {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: brown;
+}
+
 /* footer */
 .footer {
   display: flex;
