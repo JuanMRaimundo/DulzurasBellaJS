@@ -185,7 +185,7 @@ let aniadirCarrito = (id) => {
 	const contenedorCarrito = document.createElement("div");
 	contenedorCarrito.classList.add("contenedorCarrito");
 	carritoCompra.forEach((producto) => {
-		contenedorCarrito.innerHTML = `<img class="carrComp" src="${
+		contenedorCarrito.innerHTML += `<img class="carrComp" src="${
 			producto.imagen
 		}"/>
 		<div class="productoEnCarrito">
@@ -203,6 +203,16 @@ let aniadirCarrito = (id) => {
 		`;
 	});
 	viendoCarrito.appendChild(contenedorCarrito);
+};
+
+//funcion remover del carrito
+
+const removerProducto = (id) => {
+	let indice = carritoCompra.findIndex((producto) => producto.id === id);
+
+	if (indice !== -1) {
+		carritoCompra.slice(indice, 1);
+	}
 };
 
 //evento en el input
