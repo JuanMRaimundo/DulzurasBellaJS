@@ -69,7 +69,7 @@
 							placeholder="Buscar"
 							aria-label="Search"
 						/>
-						<button class="btn btn-outline-success" type="submit">
+						<button class="btn btn-outline-success" type="button">
 							Buscar
 						</button>
 					</form>
@@ -83,7 +83,8 @@
 
 			<div id="cart" class="card"></div>
 			<a name="card"> </a>
-			<div id="total" clasd="card"></div>
+			<div id="total" class="card"></div>
+			<div class="finalizar"></div>
 
 			<h2>Pedinos presupuesto para tu evento</h2>
 			<form id="contacto" class="portada_contacto">
@@ -118,7 +119,6 @@
 							value=""
 							id="invalidCheck"
 							name="novedades"
-							required
 						/>
 						<label class="form-check-label" for="invalidCheck">
 							¿Querés recibir nuestras novedades?
@@ -129,7 +129,13 @@
 					</div>
 				</div>
 				<div class="col-12">
-					<button class="btn btn-primary" type="submit">Enviar</button>
+					<button
+						id="pedido"
+						class="btn btn-primary btn-formulario"
+						type="submit"
+					>
+						Enviar
+					</button>
 				</div>
 			</form>
 		</main>
@@ -137,9 +143,9 @@
 		<footer class="footer">
 			<div>Contacto</div>
 			<div>Logo</div>
-			<div>Dónde encontrarnos</div>
+			<div id="zonas">Dónde encontrarnos</div>
 		</footer>
-
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
 			integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
@@ -150,6 +156,7 @@
 			integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
 			crossorigin="anonymous"
 		></script>
+		<script src="js/consulta.js"></script>
 		<script src="js/main.js"></script>
 	</body>
 </html>

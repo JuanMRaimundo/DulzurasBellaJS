@@ -20,8 +20,9 @@ body {
 }
 
 .btn {
-  color: #82fa58;
+  color: #030303;
   border: 0.5px solid #82fa58;
+  background-color: #82fa58;
 }
 
 /* main */
@@ -48,6 +49,12 @@ body {
 .carrComp {
   width: 150px;
   height: 150px;
+}
+
+.carrTot {
+  display: flex;
+  justify-content: center;
+  background: burlywood;
 }
 
 .contenedorCarrito {
