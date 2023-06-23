@@ -1,0 +1,114 @@
+[
+	{
+		"id": 1,
+		"tipo": "tarta",
+		"sabor": "Cabsha",
+		"precio": "1200",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/cabsha.jpg"
+	},
+	{
+		"id": 2,
+		"tipo": "tarta",
+		"sabor": "Frutillas",
+		"precio": "1500",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/frutilla1.jpg"
+	},
+	{
+		"id": 3,
+		"tipo": "tarta",
+		"sabor": "Pastafrola",
+		"precio": "1100",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/pastafrola1.jpg"
+	},
+	{
+		"id": 4,
+		"tipo": "tarta",
+		"sabor": "AppleCrumble",
+		"precio": "1500",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/manzana1.jpg"
+	},
+	{
+		"id": 5,
+		"tipo": "tarta",
+		"sabor": "LemonPie",
+		"precio": "1300",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/lemonpie1.jpg"
+	},
+	{
+		"id": 6,
+		"tipo": "tarta",
+		"sabor": "Brownie",
+		"precio": "1500",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/brownie1.jpg"
+	},
+	{
+		"id": 7,
+		"tipo": "tarta",
+		"sabor": "Ricota con dulce de leche",
+		"precio": "1750",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/ricota1.jpg"
+	},
+	{
+		"id": 8,
+		"tipo": "tarta",
+		"sabor": "Cheesecake",
+		"precio": "1900",
+		"cantidad": 0,
+		"tamañoGrande": "28cm diametro",
+		"tamañoChico": "10cm diametro",
+		"imagen": "./img/cheesecake.jpg"
+	},
+	{
+		"id": 9,
+		"tipo": "facturas",
+		"sabor": "Medialunas",
+		"precio": "150",
+		"cantidad": 0,
+		"imagen": "./img/medialuna1.jpg"
+	},
+	{
+		"id": 10,
+		"tipo": "facturas",
+		"sabor": "Cañioncitos",
+		"precio": "180",
+		"cantidad": 0,
+		"imagen": "./img/canioncito.jpg"
+	},
+	{
+		"id": 11,
+		"tipo": "facturas",
+		"sabor": "Conitos",
+		"precio": "180",
+		"cantidad": 0,
+		"imagen": "./img/conitos.jpg"
+	},
+	{
+		"id": 12,
+		"tipo": "facturas",
+		"sabor": "Chipa",
+		"precio": "220",
+		"cantidad": 0,
+		"imagen": "./img/chipa.jpg"
+	}
+]

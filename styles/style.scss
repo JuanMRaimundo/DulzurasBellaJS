@@ -10,15 +10,15 @@ body {
 }
 /* header */
 .header {
-	background-color: #f7819f !important;
+	background-color: #f5d0a9 !important;
 }
 .nav-item {
-	color: #82fa58;
+	color: #f7d358;
 }
 .btn {
 	color: #030303;
-	border: 0.5px solid #82fa58;
-	background-color: #82fa58;
+	border: 0.5px solid#F7D358;
+	background-color: #f7d358;
 }
 /* main */
 .portada {
@@ -28,6 +28,9 @@ body {
 	justify-content: space-around;
 	align-items: center;
 }
+.none {
+	display: none;
+}
 #container {
 	width: 80%;
 	height: 60%;
@@ -36,11 +39,14 @@ body {
 	width: 80%;
 	margin: auto;
 	padding: 20px;
-	background-color: #f7819f;
+	background-color: #f5d0a9;
 }
 .carrComp {
 	width: 150px;
 	height: 150px;
+}
+.card-img-top {
+	margin-top: 10px;
 }
 .carrTot {
 	display: flex;

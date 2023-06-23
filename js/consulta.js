@@ -27,3 +27,17 @@ btnFormulario.addEventListener("click", (e) => {
 		guardarFormulario("sessionStorage");
 	}
 });
+
+`/* <img class="carrComp" src="${item.imagen}"/> 
+<div class="productoEnCarrito">
+${item.sabor}
+</div>
+<div class= "productoEnCarrito"> Cantidad: ${item.cantidad}</div>
+<div class= "productoEnCarrito"> Precio: ${item.precio}</div>
+<div class= "productoEnCarrito"> Subtotal: ${item.precio * item.cantidad}</div>
+<button class= "btn btn-bs-warning-bg-subtle" id = "removerProducto" onClick="removerProducto(${
+	item.id
+})">Quitar Dulzura</button>
+ */
+
+`;
