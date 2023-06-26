@@ -36,7 +36,7 @@ class Torta {
 }
 const cobertura = ["Salta", "San Lorenzo", "Tres Cerritos", "San Luis"];
 //empiezo a construir mi base de arrays de tartas, de a poco iré sumando otros productos.
-const productos = [
+/* const productos = [
 	{
 		id: 1,
 		tipo: "tarta",
@@ -150,7 +150,7 @@ const productos = [
 		imagen: "./img/chipa.jpg",
 	},
 ];
-
+ */
 let carritoCompra = JSON.parse(localStorage.getItem("carrito")) || [];
 let viendoCarrito = document.getElementById("cart");
 let agregarTotal = document.getElementById("total");
@@ -384,12 +384,12 @@ encontranos();
 dibujarProductos(productos);
 renderizarCarrito();
 
-/* fetch("./data/db.json")
+fetch("./data/db.json")
 	.then((response) => response.json())
 	.then((data) => {
 		dibujarProductos(data.productos);
 		renderizarCarrito();
-	}); */
+	});
 /* fetch("./data/db.json")
 	.then((response) => response.json())
 	.then((data) => {
