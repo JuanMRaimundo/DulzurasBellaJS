@@ -35,7 +35,7 @@ body {
 }
 
 .none {
-  display: none;
+  display: none !important;
 }
 
 #container {
@@ -48,6 +48,7 @@ body {
   margin: auto;
   padding: 20px;
   background-color: #f5d0a9;
+  list-style: none;
 }
 
 .carrComp {
@@ -71,6 +72,10 @@ body {
   justify-content: space-evenly;
   align-items: center;
   color: brown;
+}
+
+#spinner {
+  display: none;
 }
 
 /* footer */

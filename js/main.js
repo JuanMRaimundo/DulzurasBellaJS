@@ -159,8 +159,7 @@ const inputSearch = document.querySelector(".form-control");
 const contenedor = document.getElementById("container");
 const zonas = document.getElementById("zonas");
 const btnSearch = document.querySelector(".btn");
-const btnAgregar = document.querySelector(".btn-agregar");
-console.log();
+
 //array para trabajar desde el LS
 const productosLS = JSON.parse(localStorage.getItem("productos"));
 /* const productosLS = []; */
@@ -200,34 +199,32 @@ function filtrar(arr, filtro, param) {
 		}
 	});
 }
-//funcion evento Click
-function manejarClic(elemento, callback) {
-	elemento.addEventListener("click", callback);
-}
 // funcion para dibujar el html
-
-const dibujarProductos = (dulzuras) => {
+const dibujarProductos = (productos) => {
 	contenedor.innerHTML = "";
-	dulzuras.forEach((producto) => {
+	productos.forEach((producto) => {
 		let card = document.createElement("div");
 		card.classList.add("card", "col.sm-12", "col-lg-3");
 		let contenido = `  <img src="${producto.imagen}" class="card-img-top" alt="...">
 		<div class="card-body">
 		  <h5 class="card-title">${producto.sabor}</h5>
 		  <p class="card-text">$${producto.precio}</p>
-		  <a href="#card" class="btn btn-bs-warning-bg-subtle btn-agregar">Agregar Dulzura</a>
+		  <button  class="btn btn-bs-warning-bg-subtle agregar-btn" >Agregar Dulzura</button>
 		</div>`;
+		// Agrego la card al contenedor
 		card.innerHTML = contenido;
 		contenedor.appendChild(card);
+		// Ahora la card está en el DOM. El botón ya existe, por lo tanto lo capturo
+		const botones = document.querySelectorAll(".agregar-btn");
+		// Agrego evento al botón capturado.
+		botones.forEach((boton, index) => {
+			// Si hacemos clic en el botón, se agrega al carrito
+			boton.addEventListener("click", () => {
+				aniadirCarrito(productos[index].id);
+			});
+		});
 	});
 };
-/* dibujarProductos(productosLS); */ /* REVISAR!!!!  */
-fetch("./data/db.json")
-	.then((response) => response.json())
-	.then((data) => {
-		dibujarProductos(data);
-		console.log(data);
-	});
 
 let totalCarrito = carritoCompra.reduce(
 	(acc, el) => acc + el.precio * el.cantidad,
@@ -241,33 +238,8 @@ const busqueda = function (arr, filtro) {
 	});
 	dibujarProductos(encontrado);
 };
-
-//funcion para dibujar y actualizar carrito
-let renderizarCarrito = () => {
-	viendoCarrito.className = "card-carrito";
-	viendoCarrito.innerHTML = "";
-	const contenedorCarrito = document.createElement("div");
-	contenedorCarrito.classList.add("contenedorCarrito");
-	for (const item of carritoCompra) {
-		contenedorCarrito.innerHTML += `<ul><img class="carrComp" src="${
-			item.imagen
-		}"/> 
-		<li class="productoEnCarrito">
-		${item.sabor}
-		</li>
-		<li class= "productoEnCarrito"> Cantidad: ${item.cantidad}</li>
-		<li class= "productoEnCarrito"> Precio: ${item.precio}</li>
-		<li class= "productoEnCarrito"> Subtotal: ${item.precio * item.cantidad}</li>
-		<button class= "btn btn-bs-warning-bg-subtle" id = "removerProducto" onClick="removerProducto(${
-			item.id
-		})">Quitar Dulzura</button>
-		</ul>`; //REVISAR ESTOS DIVS PARA MEJORAR LA VISUAL DE LOS PRODUCTOS
-	}
-
-	viendoCarrito.appendChild(contenedorCarrito);
-};
-//funcion para q se acumulen cantidades de productos y sumar total
-btnAgregar.addEventListener("click", (id) => {
+// funcion para añadir productos al carrito
+let aniadirCarrito = (id) => {
 	const producto = productosLS.find((el) => el.id == id); //arreglar para q me acepte mas de uno y se vayan sumando
 	const productoExistente = carritoCompra.find((el) => el.id === producto.id);
 
@@ -280,41 +252,75 @@ btnAgregar.addEventListener("click", (id) => {
 		carritoCompra.push(producto);
 	}
 
+	guardarEnLS("carrito", carritoCompra);
+	renderizarCarrito();
+};
+
+//funcion para dibujar y actualizar carrito
+let renderizarCarrito = () => {
+	viendoCarrito.className = "card-carrito";
+	viendoCarrito.innerHTML = "";
+	const contenedorCarrito = document.createElement("div");
+	contenedorCarrito.classList.add("contenedorCarrito");
+	/* 	if (carritoCompra.length === 0) {
+		viendoCarrito.innerHTML = "<p>No hay productos en el carrito.</p>";
+		agregarTotal.innerHTML = "";
+		finalizarCompra.classList.add("d-none");
+		return;
+	} */
+
+	carritoCompra.forEach((item, index) => {
+		const li = document.createElement("li");
+		li.innerHTML = `
+		  <ul>
+			<img class="carrComp" src="${item.imagen}"/> 
+			<li class="productoEnCarrito">${item.sabor}</li>
+			<li class="productoEnCarrito">Cantidad: ${item.cantidad}</li>
+			<li class="productoEnCarrito">Precio: ${item.precio}</li>
+			<li class="productoEnCarrito">Subtotal: ${item.precio * item.cantidad}</li>
+			<button class="btn btn-bs-warning-bg-subtle removerProducto" data-index="${index}">Quitar Dulzura</button>
+		  </ul>
+		`;
+
+		const botonRemover = li.querySelector(".removerProducto");
+		botonRemover.addEventListener("click", (e) => {
+			const productIndex = e.target.dataset.index;
+			removerProducto(productIndex);
+		});
+
+		contenedorCarrito.appendChild(li);
+	});
+
 	let totalCarrito = carritoCompra.reduce(
 		(acc, el) => acc + el.precio * el.cantidad,
 		0
 	);
-	agregarTotal.innerHTML = `<div class="carrTot"> Total: $${totalCarrito}</div>
-	<button class="btn" onClick="finalizando()"> Finalizar compra</button>
-	`;
 
+	agregarTotal.innerHTML = `
+		<div class="carrTot"> Total: $${totalCarrito}</div>
+		<button class="btn finaliza">Finalizar compra</button>
+	  `;
+	const final = document.querySelector(".finaliza");
+	final.addEventListener("click", () => {
+		finalizando();
+	});
+
+	viendoCarrito.appendChild(contenedorCarrito);
+};
+
+const removerProducto = (index) => {
+	carritoCompra.splice(index, 1);
+	// Guardamos el carrito en el localStorage para tenerlo actualizado si recargamos la página
 	guardarEnLS("carrito", carritoCompra);
 	renderizarCarrito();
-	return totalCarrito;
-});
-
-const removerProducto = (id) => {
-	let indice = carritoCompra.findIndex((producto) => producto.id === id);
-	if (indice !== -1) {
-		carritoCompra.splice(indice, 1);
-		totalCarrito - carritoCompra[3];
-	}
-	renderizarCarrito();
-	guardarEnLS("carrito", carritoCompra);
 };
-/* //guardar carrito en LS y finalizar compra
 
-const guardarCarritoEnLS = () => {
-	finalizarCompra.innerHTML = ``;
-	Swal.fire("En minutos, las Dulzuras serán tuyas");
-	guardarEnLS("carrito", carritoCompra);
-	dibujarProductos(productosLS);
-};
- */
+//guardar carrito en LS y finalizar compra
+
 async function finalizando() {
 	const { value: formValues } = await Swal.fire({
 		title: "Finalizá tu compra",
-		html: `'<form class="row g-3">
+		html: `<form class="row g-3">
 			<div class="col-md-6">
 			  <label for="inputEmail4" class="form-label">Email</label>
 			  <input type="email" class="form-control" id="inputEmail4">
@@ -343,42 +349,26 @@ async function finalizando() {
 			  <label for="inputZip" class="form-label">N° Dpto</label>
 			  <input type="text" class="form-control" id="inputZip">
 			</div>
+
 			<div class="col-12">
-			  <div class="form-check">
-				<input class="form-check-input" type="checkbox" id="gridCheck">
-				<label class="form-check-label" for="gridCheck">
-				  Verifícame
-				</label>
-			  </div>
-			</div>
-			<div class="col-12">
-			  <button type="submit" class="btn btn-primary">Ingresar</button>
-			</div>
-		  </form>',`,
+			<button type="submit" class="btn btn-primary">Cancelar</button>
+		  </div>
+		  </form>,`,
+
 		showCloseButton: true,
 		focusConfirm: false,
-		showCancelButton: true,
-		preConfirm: () => {
-			return [
-				document.getElementById("swal-input1").value,
-				document.getElementById("swal-input2").value,
-			];
-		},
+		showCancelButton: false,
 	});
 
 	if (formValues) {
-		Swal.fire(JSON.stringify(formValues));
+		setTimeout(() => {
+			Swal.fire("Gracias por tu compra").then(() => {
+				carritoCompra.splice(0); //borro datos del array carrito
+				localStorage.removeItem("carrito"); //borro el carrito
+				location.reload(); // Recargar la página
+			});
+		}, 1000);
 	}
-	/* 	finalizarCompra.innerHTML = `		<form>
-	<input placeholder="e-mail">
-	<input placeholder="">
-	<button type="button">comprar </button>
-
-</form>`; //FINALIZAR COMPRA Y MANDAR A UNA NUEVA PAG CON EL FORMULARIO */
-	agregarTotal.classList.add("none");
-	carritoCompra.splice(0);
-	localStorage.removeItem("carrito");
-	renderizarCarrito();
 }
 
 // desestructura cobertura
@@ -391,5 +381,29 @@ let encontranos = () => {
 	zonas.innerHTML = `<div>Encontranos en ${zonaCobertura}</div>`;
 };
 encontranos();
+dibujarProductos(productos);
+renderizarCarrito();
 
-/* onClick="aniadirCarrito(${producto.id})" */
+/* fetch("./data/db.json")
+	.then((response) => response.json())
+	.then((data) => {
+		dibujarProductos(data.productos);
+		renderizarCarrito();
+	}); */
+/* fetch("./data/db.json")
+	.then((response) => response.json())
+	.then((data) => {
+		// Obtener los productos del objeto data
+		const productos = data.productos;
+
+		// Guardar los productos en el Local Storage
+		guardarEnLS("productos2", productos);
+
+		// Llamar a la función para dibujar los productos en el navegador
+
+		dibujarProductos(productos);
+	})
+	.catch((error) => {
+		console.log("Error al obtener los datos:", error);
+	});
+ */
