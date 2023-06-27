@@ -151,12 +151,7 @@ const cobertura = ["Salta", "San Lorenzo", "Tres Cerritos", "San Luis"];
 	},
 ];
  */
-fetch("./data/db.json")
-	.then((response) => response.json())
-	.then((productos) => {
-		dibujarProductos(productos);
-		renderizarCarrito();
-	});
+
 let carritoCompra = JSON.parse(localStorage.getItem("carrito")) || [];
 let viendoCarrito = document.getElementById("cart");
 let agregarTotal = document.getElementById("total");
@@ -167,7 +162,7 @@ const zonas = document.getElementById("zonas");
 const btnSearch = document.querySelector(".btn");
 
 //array para trabajar desde el LS
-const productosLS = JSON.parse(localStorage.getItem("productos"));
+/* const productosLS = JSON.parse(localStorage.getItem("productos")); */
 /* const productosLS = []; */
 
 //funcion guardar productos en el LS
@@ -175,7 +170,7 @@ function guardarEnLS(clave, arr) {
 	localStorage.setItem(clave, JSON.stringify(arr));
 }
 
-let carritoLS = JSON.parse(localStorage.getItem(productosLS)) || productosLS;
+/* let carritoLS = JSON.parse(localStorage.getItem(productosLS)) || productosLS; */
 
 //evento en el input
 
@@ -204,6 +199,7 @@ function filtrar(arr, filtro, param) {
 		}
 	});
 }
+
 // funcion para dibujar el html
 const dibujarProductos = (productos) => {
 	contenedor.innerHTML = "";
@@ -245,7 +241,7 @@ const busqueda = function (arr, filtro) {
 };
 // funcion para añadir productos al carrito
 /* let aniadirCarrito = (id) => {
-	const producto = productosLS.find((el) => el.id == id); //arreglar para q me acepte mas de uno y se vayan sumando
+	const producto = productos.find((el) => el.id == id); //arreglar para q me acepte mas de uno y se vayan sumando
 	const productoExistente = carritoCompra.find((el) => el.id === producto.id);
 
 	if (productoExistente) {
@@ -405,6 +401,12 @@ let encontranos = () => {
 encontranos();
 
 renderizarCarrito();
+fetch("./data/db.json")
+	.then((response) => response.json())
+	.then((productos) => {
+		dibujarProductos(productos);
+		renderizarCarrito();
+	});
 
 /* fetch("./data/db.json")
 	.then((response) => response.json())
