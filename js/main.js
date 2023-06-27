@@ -151,6 +151,12 @@ const cobertura = ["Salta", "San Lorenzo", "Tres Cerritos", "San Luis"];
 	},
 ];
  */
+fetch("./data/db.json")
+	.then((response) => response.json())
+	.then((productos) => {
+		dibujarProductos(productos);
+		renderizarCarrito();
+	});
 let carritoCompra = JSON.parse(localStorage.getItem("carrito")) || [];
 let viendoCarrito = document.getElementById("cart");
 let agregarTotal = document.getElementById("total");
@@ -168,7 +174,6 @@ const productosLS = JSON.parse(localStorage.getItem("productos"));
 function guardarEnLS(clave, arr) {
 	localStorage.setItem(clave, JSON.stringify(arr));
 }
-guardarEnLS("productos", productos);
 
 let carritoLS = JSON.parse(localStorage.getItem(productosLS)) || productosLS;
 
@@ -217,10 +222,10 @@ const dibujarProductos = (productos) => {
 		// Ahora la card está en el DOM. El botón ya existe, por lo tanto lo capturo
 		const botones = document.querySelectorAll(".agregar-btn");
 		// Agrego evento al botón capturado.
-		botones.forEach((boton, index) => {
+		botones.forEach((boton, producto) => {
 			// Si hacemos clic en el botón, se agrega al carrito
 			boton.addEventListener("click", () => {
-				aniadirCarrito(productos[index].id);
+				aniadirCarrito(productos, producto.id);
 			});
 		});
 	});
@@ -239,7 +244,7 @@ const busqueda = function (arr, filtro) {
 	dibujarProductos(encontrado);
 };
 // funcion para añadir productos al carrito
-let aniadirCarrito = (id) => {
+/* let aniadirCarrito = (id) => {
 	const producto = productosLS.find((el) => el.id == id); //arreglar para q me acepte mas de uno y se vayan sumando
 	const productoExistente = carritoCompra.find((el) => el.id === producto.id);
 
@@ -254,6 +259,23 @@ let aniadirCarrito = (id) => {
 
 	guardarEnLS("carrito", carritoCompra);
 	renderizarCarrito();
+}; */
+const aniadirCarrito = (productos, id) => {
+	// Si el producto no está en el carrito, lo agregamos
+	if (!carritoCompra.some((producto) => producto.id === id)) {
+		// Buscamos el producto en el array de productos
+		const producto = productos.find((producto) => producto.id === id);
+		// Agregamos un nuevo objeto con el contenido del producto y un campo cantidad en 1.
+		carritoCompra.push({ ...producto, cantidad: 1 });
+	} else {
+		// Si el producto está en el carrito, lo buscamos y le incrementamos las unidades
+		const producto = carritoCompra.find((producto) => producto.id === id);
+		producto.cantidad++;
+	}
+	// Guardamos el carrito en el localStorage para tenerlo actualizado si recargamos la página porque hicimos cambios
+	guardarEnLS("carrito", carritoCompra);
+	// Actualizamos la vista del carrito porque hemos hecho cambios
+	renderizarCarrito();
 };
 
 //funcion para dibujar y actualizar carrito
@@ -262,12 +284,12 @@ let renderizarCarrito = () => {
 	viendoCarrito.innerHTML = "";
 	const contenedorCarrito = document.createElement("div");
 	contenedorCarrito.classList.add("contenedorCarrito");
-	/* 	if (carritoCompra.length === 0) {
+	if (carritoCompra.length === 0) {
 		viendoCarrito.innerHTML = "<p>No hay productos en el carrito.</p>";
 		agregarTotal.innerHTML = "";
 		finalizarCompra.classList.add("d-none");
 		return;
-	} */
+	}
 
 	carritoCompra.forEach((item, index) => {
 		const li = document.createElement("li");
@@ -381,15 +403,9 @@ let encontranos = () => {
 	zonas.innerHTML = `<div>Encontranos en ${zonaCobertura}</div>`;
 };
 encontranos();
-dibujarProductos(productos);
+
 renderizarCarrito();
 
-fetch("./data/db.json")
-	.then((response) => response.json())
-	.then((data) => {
-		dibujarProductos(data.productos);
-		renderizarCarrito();
-	});
 /* fetch("./data/db.json")
 	.then((response) => response.json())
 	.then((data) => {
