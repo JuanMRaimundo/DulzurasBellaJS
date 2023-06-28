@@ -185,9 +185,9 @@ btnSearch.addEventListener("click", (e) => {
 	console.log(busq);
 });
 
-localStorage.getItem("productos")
+/* localStorage.getItem("productos")
 	? (dulzuras = JSON.parse(localStorage.getItem("productos")))
-	: (carritoCompra = productos);
+	: (carritoCompra = productos); */
 
 //funcion de busqueda
 function filtrar(arr, filtro, param) {
@@ -210,15 +210,15 @@ const dibujarProductos = (productos) => {
 		<div class="card-body">
 		  <h5 class="card-title">${producto.sabor}</h5>
 		  <p class="card-text">$${producto.precio}</p>
-		  <button  class="btn btn-bs-warning-bg-subtle agregar-btn" >Agregar Dulzura</button>
+		  <button id="agregar-${producto.id}" class="btn btn-bs-warning-bg-subtle agregar-btn" >Agregar Dulzura</button>
 		</div>`;
 		// Agrego la card al contenedor
 		card.innerHTML = contenido;
 		contenedor.appendChild(card);
 		// Ahora la card está en el DOM. El botón ya existe, por lo tanto lo capturo
-		const botones = document.querySelectorAll(".agregar-btn");
+		const botones = document.getElementById("agregar-${producto.id}");
 		// Agrego evento al botón capturado.
-		botones.forEach((boton, producto) => {
+		botones.forEach((boton) => {
 			// Si hacemos clic en el botón, se agrega al carrito
 			boton.addEventListener("click", () => {
 				aniadirCarrito(productos, producto.id);
@@ -256,6 +256,7 @@ const busqueda = function (arr, filtro) {
 	guardarEnLS("carrito", carritoCompra);
 	renderizarCarrito();
 }; */
+
 const aniadirCarrito = (productos, id) => {
 	// Si el producto no está en el carrito, lo agregamos
 	if (!carritoCompra.some((producto) => producto.id === id)) {
@@ -392,7 +393,7 @@ async function finalizando() {
 // desestructura cobertura
 
 const zonaCobertura = [...cobertura];
-console.log(zonaCobertura);
+
 //pintar zonas en FT
 
 let encontranos = () => {
@@ -407,7 +408,7 @@ fetch("./data/db.json")
 		dibujarProductos(productos);
 		renderizarCarrito();
 	});
-
+console.log(productos);
 /* fetch("./data/db.json")
 	.then((response) => response.json())
 	.then((data) => {
