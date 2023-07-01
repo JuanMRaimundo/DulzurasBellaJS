@@ -15,7 +15,7 @@
 		"precio": "1500",
 		"tamañoGrande": "28cm diametro",
 		"tamañoChico": "10cm diametro",
-		"imagen": "./img/frutilla1.jpg"
+		"imagen": "./img/frutilla.jpg"
 	},
 	{
 		"id": 3,
@@ -24,7 +24,7 @@
 		"precio": "1100",
 		"tamañoGrande": "28cm diametro",
 		"tamañoChico": "10cm diametro",
-		"imagen": "./img/pastafrola1.jpg"
+		"imagen": "./img/pastafrola.jpg"
 	},
 	{
 		"id": 4,
@@ -33,7 +33,7 @@
 		"precio": "1500",
 		"tamañoGrande": "28cm diametro",
 		"tamañoChico": "10cm diametro",
-		"imagen": "./img/manzana1.jpg"
+		"imagen": "./img/manzana.jpg"
 	},
 	{
 		"id": 5,
@@ -42,7 +42,7 @@
 		"precio": "1300",
 		"tamañoGrande": "28cm diametro",
 		"tamañoChico": "10cm diametro",
-		"imagen": "./img/lemonpie1.jpg"
+		"imagen": "./img/lemonpie.jpg"
 	},
 	{
 		"id": 6,
@@ -51,7 +51,7 @@
 		"precio": "1500",
 		"tamañoGrande": "28cm diametro",
 		"tamañoChico": "10cm diametro",
-		"imagen": "./img/brownie1.jpg"
+		"imagen": "./img/brownie.jpg"
 	},
 	{
 		"id": 7,
@@ -60,7 +60,7 @@
 		"precio": "1750",
 		"tamañoGrande": "28cm diametro",
 		"tamañoChico": "10cm diametro",
-		"imagen": "./img/ricota1.jpg"
+		"imagen": "./img/ricota.jpg"
 	},
 	{
 		"id": 8,
@@ -76,12 +76,12 @@
 		"tipo": "facturas",
 		"sabor": "Medialunas",
 		"precio": "150",
-		"imagen": "./img/medialuna1.jpg"
+		"imagen": "./img/medialuna.jpg"
 	},
 	{
 		"id": 10,
 		"tipo": "facturas",
-		"sabor": "Cañioncitos",
+		"sabor": "Cañoncitos",
 		"precio": "180",
 		"imagen": "./img/canioncito.jpg"
 	},

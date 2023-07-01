@@ -34,16 +34,14 @@ body {
   align-items: center;
 }
 
-.none {
-  display: none !important;
-}
-
 #container {
   width: 80%;
   height: 60%;
 }
 
 .card-carrito {
+  display: flex;
+  justify-content: center;
   width: 80%;
   margin: auto;
   padding: 20px;
@@ -56,8 +54,14 @@ body {
   height: 150px;
 }
 
+.card {
+  background-color: #f5d0a9;
+}
+
 .card-img-top {
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 80%;
 }
 
 .carrTot {
@@ -82,16 +86,4 @@ body {
 .footer {
   display: flex;
   justify-content: space-around;
-}
-
-/* MEDIA QUERIES */
-/* TABLET */
-/* DESKTOP */
-@media (min-width: 1024px) {
-  .portada {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-  }
 }/*# sourceMappingURL=style.css.map */

@@ -28,14 +28,14 @@ body {
 	justify-content: space-around;
 	align-items: center;
 }
-.none {
-	display: none !important;
-}
+
 #container {
 	width: 80%;
 	height: 60%;
 }
 .card-carrito {
+	display: flex;
+	justify-content: center;
 	width: 80%;
 	margin: auto;
 	padding: 20px;
@@ -46,9 +46,15 @@ body {
 	width: 150px;
 	height: 150px;
 }
-.card-img-top {
-	margin-top: 10px;
+.card {
+	background-color: #f5d0a9;
 }
+.card-img-top {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 80%;
+}
+
 .carrTot {
 	display: flex;
 	justify-content: center;
@@ -68,17 +74,4 @@ body {
 .footer {
 	display: flex;
 	justify-content: space-around;
-}
-/* MEDIA QUERIES */
-/* TABLET */
-@media (min-width: 767px) and (max-width: 1024px) {
-}
-/* DESKTOP */
-@media (min-width: 1024px) {
-	.portada {
-		display: flex;
-		flex-direction: column;
-		align-content: center;
-		align-items: center;
-	}
 }
