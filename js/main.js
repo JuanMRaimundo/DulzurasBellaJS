@@ -231,7 +231,7 @@ inputSearch.addEventListener("keypress", (e) => {
 
 const iniciarApp = (data) => {
     productos = data;
-    dibujarProductos(productos); /
+    dibujarProductos(productos); 
     renderizarCarrito(); 
   
     const zonaCobertura = [...cobertura];
