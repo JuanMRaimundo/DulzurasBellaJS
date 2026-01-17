@@ -239,7 +239,7 @@ const iniciarApp = (data) => {
 };
 
 
-fetch("./data/db.json")
+fetch("data/db.json")
     .then((response) => {
         if (!response.ok) {
             throw new Error("No se pudo cargar el archivo JSON");
