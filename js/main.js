@@ -121,39 +121,86 @@ const aniadirCarrito = (productos, id) => {
 
 //funcion para dibujar y actualizar carrito
 let renderizarCarrito = () => {
-	viendoCarrito.className = "card-carrito";
-	viendoCarrito.innerHTML = "";
-	const contenedorCarrito = document.createElement("div");
-	contenedorCarrito.classList.add("contenedorCarrito");
-	if (carritoCompra.length === 0) {
-		viendoCarrito.innerHTML = "<p>No hay productos en el carrito.</p>";
-		agregarTotal.innerHTML = "";
-		finalizarCompra.classList.add("d-none");
-		return;
-	}
+    viendoCarrito.className = "card-carrito"; 
+    viendoCarrito.innerHTML = "";
+    
+    // Contenedor limpio
+    const contenedorCarrito = document.createElement("div");
+    contenedorCarrito.classList.add("w-100"); // Ancho total
 
-	carritoCompra.forEach((item, index) => {
-		const li = document.createElement("li");
-		li.innerHTML = `
-		  <ul>
-			<img class="carrComp" src="${item.imagen}"/> 
-			<li class="productoEnCarrito">${item.sabor}</li>
-			<li class="productoEnCarrito">Cantidad: ${item.cantidad}</li>
-			<li class="productoEnCarrito">Precio: ${item.precio}</li>
-			<li class="productoEnCarrito">Subtotal: ${item.precio * item.cantidad}</li>
-			<button class="btn btn-bs-warning-bg-subtle removerProducto" data-index="${index}">Quitar Dulzura</button>
-		  </ul>
-		`;
+    if (carritoCompra.length === 0) {
+        viendoCarrito.innerHTML = `<div class="alert alert-warning text-center" role="alert">Tu carrito está vacío 😢</div>`;
+        agregarTotal.innerHTML = "";
+        finalizarCompra.classList.add("d-none"); 
+        return;
+    }
 
-		const botonRemover = li.querySelector(".removerProducto");
-		botonRemover.addEventListener("click", (e) => {
-			const productIndex = e.target.dataset.index;
-			removerProducto(productIndex);
-		});
+    // Volvemos a mostrar el botón de finalizar si hay productos
+    finalizarCompra.classList.remove("d-none");
 
-		contenedorCarrito.appendChild(li);
-	});
+    const headers = document.createElement("div");
+    headers.innerHTML = `
+        <div class="row fw-bold border-bottom pb-2 mb-2 text-center text-md-start">
+            <div class="col-5">Producto</div>
+            <div class="col-3">Unitario</div>
+            <div class="col-3">Subtotal</div>
+            <div class="col-1"></div>
+        </div>
+    `;
+    contenedorCarrito.appendChild(headers);
 
+    carritoCompra.forEach((item, index) => {
+        const fila = document.createElement("div");
+        fila.classList.add("row", "align-items-center", "mb-3", "border-bottom", "pb-2");
+        
+        // Estructura limpia: Nombre xCant | $Unit | $Subtotal | Eliminar
+        fila.innerHTML = `
+            <div class="col-5">
+                <span class="fw-bold text-dark">${item.sabor}</span>
+                <span class="badge text-bg-secondary ms-1">x${item.cantidad}</span>
+            </div>
+            <div class="col-3 text-muted">
+                $${item.precio}
+            </div>
+            <div class="col-3 fw-bold text-dark">
+                $${item.precio * item.cantidad}
+            </div>
+            <div class="col-1 text-end">
+                <button class="btn btn-sm btn-outline-danger removerProducto border-0" data-index="${index}">
+                    <i class="bi bi-trash"></i> X
+                </button>
+            </div>
+        `;
+
+        const botonRemover = fila.querySelector(".removerProducto");
+        botonRemover.addEventListener("click", (e) => {
+            // Usamos currentTarget para asegurar que agarramos el botón aunque hagamos click en el icono/texto
+            const productIndex = e.currentTarget.dataset.index;
+            removerProducto(productIndex);
+        });
+
+        contenedorCarrito.appendChild(fila);
+    });
+
+    viendoCarrito.appendChild(contenedorCarrito);
+
+    // Calcular total
+    let total = carritoCompra.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
+
+    // Renderizar zona de totales
+    agregarTotal.innerHTML = `
+        <div class="d-flex justify-content-end align-items-center mt-3 p-3 bg-light rounded">
+            <h4 class="me-3 mb-0">Total: $${total}</h4>
+            <button class="btn btn-success btn-lg finaliza">Finalizar compra</button>
+        </div>
+    `;
+    
+    // Reasignar evento al botón nuevo
+    const final = document.querySelector(".finaliza");
+    final.addEventListener("click", () => {
+        finalizando();
+    });
+};
 	let totalCarrito = carritoCompra.reduce(
 		(acc, el) => acc + el.precio * el.cantidad,
 		0
@@ -179,63 +226,50 @@ const removerProducto = (index) => {
 };
 
 //finalizar compra, se agrega formulario y se borra el carrito del LS
-
 async function finalizando() {
-	const { value: formValues } = await Swal.fire({
-		title: "Finalizá tu compra",
-		html: `<form class="row g-3">
-			<div class="col-md-6">
-			  <label for="inputEmail4" class="form-label">Email</label>
-			  <input type="email" class="form-control" id="inputEmail4">
-			</div>
-			<div class="col-md-6">
-			  <label for="inputPassword4" class="form-label">Contraseña</label>
-			  <input type="password" class="form-control" id="inputPassword4">
-			</div>
-			<div class="col-12">
-			  <label for="inputAddress" class="form-label">Dirección</label>
-			  <input type="text" class="form-control" id="inputAddress" placeholder="Calle - N°-">
-			</div>
-			<div class="col-md-6">
-			  <label for="inputCity" class="form-label">Ciudad</label>
-			  <input type="text" class="form-control" id="inputCity">
-			</div>
-			<div class="col-md-4">
-			  <label for="inputState" class="form-label">Forma de pago</label>
-			  <select id="inputState" class="form-select">
-				<option selected>Elige...</option>
-				<option>Efectivo</option>
-				<option>Mercado Pago</option>
-			  </select>
-			</div>
-			<div class="col-md-2">
-			  <label for="inputZip" class="form-label">N° Dpto</label>
-			  <input type="text" class="form-control" id="inputZip">
-			</div>
+    // Mostrar Formulario
+    const { value: formValues } = await Swal.fire({
+        title: "Finalizá tu compra",
+        html: `
+            <form class="row g-3 text-start">
+                <div class="col-12">
+                    <label class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" placeholder="Tu nombre">
+                </div>
+                </form>
+        `,
+        confirmButtonText: 'Confirmar Compra',
+        confirmButtonColor: '#d4a373', 
+        showCancelButton: true,
+        cancelButtonText: 'Seguir comprando'
+    });
 
-			<div class="col-12">
-			<button type="submit" class="btn btn-primary">Cancelar</button>
-		  </div>
-		  </form>,`,
+    if (formValues) {
+      
+        const spinner = document.getElementById("spinner");
+        spinner.classList.remove("d-none"); 
+        viendoCarrito.classList.add("opacity-50"); 
 
-		showCloseButton: true,
-		focusConfirm: false,
-		showCancelButton: false,
-	});
-	if (formValues) {
-		//barra de espera ficticia
-		let barra = document.createElement("div");
-		barra.classList.add("progress");
-		barra.innerHTML = `<div class="indeterminate"></div>`;
-		document.body.appendChild(barra);
-	}
-	setTimeout(() => {
-		Swal.fire("Gracias por tu compra").then(() => {
-			carritoCompra.splice(0); // Borrar datos del array carrito
-			localStorage.removeItem("carrito"); // Borrar el carrito
-			location.reload(); // Recargar la página
-		});
-	}, 2000);
+        //  Simular demora de red
+        setTimeout(() => {
+            //Ocultar Spinner
+            spinner.classList.add("d-none"); 
+            viendoCarrito.classList.remove("opacity-50");
+
+            // Mensaje de Éxito
+            Swal.fire({
+                icon: 'success',
+                title: '¡Gracias por tu compra!',
+                text: 'Te enviaremos el detalle por email.',
+                confirmButtonColor: '#d4a373'
+            }).then(() => {
+                // Limpieza final
+                carritoCompra = []; 
+                localStorage.removeItem("carrito"); 
+                renderizarCarrito(); 
+            });
+        }, 2000);
+    }
 }
 // Asigna el evento click al botón de búsqueda
 btnSearch.addEventListener("click", (e) => {
