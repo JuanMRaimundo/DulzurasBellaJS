@@ -56,24 +56,48 @@ const busqueda = function (filtro) {
 };
 
 // funcion para dibujar el html
+// funcion para dibujar el html
 const dibujarProductos = (productos) => {
-	contenedor.innerHTML = "";
-	productos.forEach((producto) => {
-		let card = document.createElement("div");
-		card.classList.add("card", "col-sm-6", "col-lg-3");
-		let contenido = `  <img src="${producto.imagen}" class="card-img-top animate__pulse" alt="...">
-		<div class="card-body">
-		  <h5 class="card-title">${producto.sabor}</h5>
-		  <p class="card-text">$${producto.precio}</p>
-		  <button id="agregar-${producto.id}" class="btn btn-bs-warning-bg-subtle agregar-btn" >Agregar Dulzura</button>
-		</div>`;
-		card.innerHTML = contenido;
-		contenedor.appendChild(card);
-		const boton = document.getElementById(`agregar-${producto.id}`);
-		boton.addEventListener("click", () => {
-			aniadirCarrito(productos, producto.id);
-		});
-	});
+    contenedor.innerHTML = "";
+    productos.forEach((producto) => {
+        let col = document.createElement("div");
+        // Usamos col-12 (celu), col-md-6 (tablet), col-lg-3 (pc) para respuesta responsiva
+        col.classList.add("col-12", "col-md-6", "col-lg-3"); 
+        
+        let contenido = `
+            <div class="card card-product h-100">
+                <img src="${producto.imagen}" class="card-img-top" alt="${producto.sabor}">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="card-title">${producto.sabor}</h5>
+                        <p class="text-muted small">${producto.tipo}</p>
+                    </div>
+                    <div>
+                        <span class="price-tag">$${producto.precio}</span>
+                        <button id="agregar-${producto.id}" class="btn agregar-btn">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        
+        col.innerHTML = contenido;
+        contenedor.appendChild(col);
+        
+        const boton = document.getElementById(`agregar-${producto.id}`);
+        boton.addEventListener("click", () => {
+            aniadirCarrito(productos, producto.id);
+            // Agregamos una alerta chiquita para feedback visual (Opcional)
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Agregado al carrito',
+                showConfirmButton: false,
+                timer: 1000,
+                toast: true
+            })
+        });
+    });
 };
 
 let totalCarrito = carritoCompra.reduce(
