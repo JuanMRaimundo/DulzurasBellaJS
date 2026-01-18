@@ -10,7 +10,7 @@ const finalizarCompra = document.querySelector(".finalizar");
 const inputSearch = document.querySelector(".form-control");
 const contenedor = document.getElementById("container");
 const zonas = document.getElementById("zonas");
-const btnSearch = document.querySelector(".btn-busqueda");
+const btnSearch = document.querySelector(".btn-search");
 
 
 
